@@ -1,0 +1,11 @@
+## Interface: 30300
+## Title: Munigan - Combat Text
+## Notes: A combat text addon customized for the Munigan UI.
+## Author: Munigan
+## Version: 3.7.1
+## RequiredDeps: Blizzard_CombatText
+## SavedVariables: MuniganXCTDB
+
+compat.lua
+include.xml
+core.lua

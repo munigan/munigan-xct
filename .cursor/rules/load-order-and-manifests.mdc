@@ -1,0 +1,16 @@
+---
+description: Guardrails for TOC and XML load-order changes
+globs: "{MuniganXCT.toc,include.xml,config/include.xml,media/include.xml,modules/include.xml,libs/include.xml}"
+alwaysApply: false
+---
+
+# Load Order And Manifests
+
+- Treat `MuniganXCT.toc` and the project `include.xml` files as startup manifests where ordering is part of runtime behavior.
+- Only add a file to TOC/XML when it must load at startup, and place it in the correct stage of the addon boot sequence.
+- Keep `core.lua` after `include.xml`; it assumes config, libs, media, and modules are already loaded.
+- Verify every referenced path exists exactly as written. A stale `<Script file="..."/>` or TOC entry can break the addon at load time.
+- Avoid reordering bundled library includes unless the change is intentional and validated; Ace3 and shared-media dependencies are load-order sensitive.
+- If you introduce a new module, wire it into the smallest relevant manifest instead of dumping everything into the root TOC.
+
+Example: adding `modules/myfeature.lua` should usually mean registering it in `modules/include.xml`, not directly in `MuniganXCT.toc`, and confirming the file exists in the repo.

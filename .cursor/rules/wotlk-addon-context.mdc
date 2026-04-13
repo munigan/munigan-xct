@@ -1,0 +1,16 @@
+---
+description: Project-wide context for adapting this Wrath MuniganXCT addon safely
+alwaysApply: true
+---
+
+# WotLK Addon Context
+
+- This project targets WoW Wrath 3.3.x (`## Interface: 30300`) and depends on `Blizzard_CombatText`; prefer WotLK-era APIs and put compatibility shims in `compat.lua`.
+- Treat `libs/` as vendored third-party code. Prefer edits in `compat.lua`, `init.lua`, `core.lua`, `config/`, `media/`, and `modules/`.
+- Preserve load order: `MuniganXCT.toc` loads `compat.lua`, `include.xml`, then `core.lua`; `include.xml` loads config, libs, init, media, and modules before `core.lua`.
+- Runtime convention: `addon.engine` is the AceAddon instance and most addon methods hang off `local x = addon.engine`.
+- Persistent settings live in `MuniganXCTDB` through `x.db.profile`; new configurable behavior usually needs defaults in `config/profile.lua` and UI in `modules/options.lua`.
+- Combat behavior is centered in `modules/combattext.lua` and presentation/routing in `modules/frames.lua`; keep those responsibilities separated.
+- Known repo hazard: `modules/include.xml` references `messages.lua`, but that file is missing in this repo. Verify XML/TOC references against real files before adding or renaming entries.
+
+Example: if adding a new configurable combat text feature, update the runtime module, add profile defaults, and expose the setting in the options UI together.

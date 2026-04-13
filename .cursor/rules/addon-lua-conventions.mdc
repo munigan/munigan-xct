@@ -1,0 +1,16 @@
+---
+description: Conventions for project-owned addon Lua files
+globs: "{compat.lua,core.lua,init.lua,config/**/*.lua,media/**/*.lua,modules/**/*.lua}"
+alwaysApply: false
+---
+
+# Addon Lua Conventions
+
+- Match the existing addon style: keep file-local aliases for globals, use `local AddonName, addon = ...` where relevant, and attach addon behavior to `local x = addon.engine`.
+- Put user-facing settings in `x.db.profile`, not ad hoc globals. Keep spell- or event-driven configuration keyed by stable numeric IDs.
+- Preserve Ace3 lifecycle and event flow. Initialization belongs in the addon lifecycle, while gameplay reactions stay in event handlers or module methods.
+- Prefer focused edits in the module that owns the behavior: `modules/combattext.lua` for event logic, `modules/frames.lua` for display/routing, `core.lua` for profile refresh/setup, `media/` for registered assets.
+- Avoid retail-only API assumptions. If the client needs a compatibility workaround, centralize it in `compat.lua` instead of scattering version checks.
+- Do not add project logic under `libs/` or rewrite vendored library code unless the task is explicitly about updating a bundled dependency.
+
+Example: a new frame toggle should usually touch `config/profile.lua` for defaults, `modules/options.lua` for configuration UI, and the consuming runtime module that reads the setting.
