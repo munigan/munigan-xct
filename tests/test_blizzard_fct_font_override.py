@@ -18,6 +18,9 @@ def test_blizzard_fct_reapplies_selected_font():
     assert "CombatTextFont:SetFont(" in blizzard, (
         "Blizzard FCT override should update the actual CombatTextFont object."
     )
+    assert 'hooksecurefunc(elvui, "UpdateBlizzardFonts"' in blizzard, (
+        "MuniganXCT should reapply its combat text font after ElvUI updates Blizzard fonts."
+    )
 
 
 if __name__ == "__main__":

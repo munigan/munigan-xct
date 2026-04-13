@@ -16,7 +16,23 @@ local ADDON_NAME, addon = ...
 local x = addon.engine
 
 local LSM = LibStub("LibSharedMedia-3.0");
+local type = type
 local string_sub = string.sub
+
+local function HookElvUIBlizzardFonts()
+  if x.elvUIBlizzardFontsHooked then
+    return
+  end
+
+  local elvui = _G.ElvUI and _G.ElvUI[1]
+  if elvui and type(elvui.UpdateBlizzardFonts) == "function" then
+    hooksecurefunc(elvui, "UpdateBlizzardFonts", function()
+      x:UpdateBlizzardFCT()
+    end)
+
+    x.elvUIBlizzardFontsHooked = true
+  end
+end
 
 -- Intercept Messages Sent by other Add-Ons that use CombatText_AddMessage
 hooksecurefunc('CombatText_AddMessage', function(message, scrollFunction, r, g, b, displayType, isStaggered)
@@ -73,6 +89,8 @@ InterfaceOptionsCombatTextPanelPetDamage:Hide()
 InterfaceOptionsCombatTextPanelHealing:Hide()
 
 function x:UpdateBlizzardFCT()
+  HookElvUIBlizzardFonts()
+
   if self.db.profile.blizzardFCT.enabled then
     DAMAGE_TEXT_FONT = self.db.profile.blizzardFCT.fontName
 
