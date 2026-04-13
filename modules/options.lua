@@ -1213,9 +1213,7 @@
            set = function(info, value)
              x.db.profile.blizzardFCT.font = value
              x.db.profile.blizzardFCT.fontName = LSM:Fetch("font", value)
- 
-             --x:UpdateFrames()
-             --x.cvar_udpate()
+            x:UpdateBlizzardFCT()
            end,
            disabled = function(info) return not x.db.profile.blizzardFCT.enabled end,
          },

@@ -2,7 +2,7 @@
 ## Title: Munigan - Combat Text
 ## Notes: A combat text addon customized for the Munigan UI.
 ## Author: Munigan
-## Version: 3.7.1
+## Version: 3.7.2
 ## RequiredDeps: Blizzard_CombatText
 ## SavedVariables: MuniganXCTDB
 

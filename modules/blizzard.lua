@@ -16,6 +16,7 @@ local ADDON_NAME, addon = ...
 local x = addon.engine
 
 local LSM = LibStub("LibSharedMedia-3.0");
+local string_sub = string.sub
 
 -- Intercept Messages Sent by other Add-Ons that use CombatText_AddMessage
 hooksecurefunc('CombatText_AddMessage', function(message, scrollFunction, r, g, b, displayType, isStaggered)
@@ -75,10 +76,13 @@ function x:UpdateBlizzardFCT()
   if self.db.profile.blizzardFCT.enabled then
     DAMAGE_TEXT_FONT = self.db.profile.blizzardFCT.fontName
 
-    -- Not working
-		--  LSM:Fetch("font", self.db.profile.blizzardFCT.font)
-    --COMBAT_TEXT_HEIGHT = self.db.profile.blizzardFCT.fontSize
-    --CombatTextFont:SetFont(self.db.profile.blizzardFCT.font, self.db.profile.blizzardFCT.fontSize, self.db.profile.blizzardFCT.fontOutline)
+    if CombatTextFont and CombatTextFont.SetFont then
+      CombatTextFont:SetFont(
+        self.db.profile.blizzardFCT.fontName,
+        self.db.profile.blizzardFCT.fontSize,
+        string_sub(self.db.profile.blizzardFCT.fontOutline, 2)
+      )
+    end
   end
 end
 
